@@ -1,0 +1,16 @@
+services:
+  vndb:
+    build:
+      context: ./vndb
+      dockerfile: Dockerfile
+    container_name: vndb
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./vndb:/vndb
+      - ./vndb-db-2026-03-21.tar.zst:/dump/vndb-db.tar.zst:ro
+      - ./init-vndb.sh:/init-vndb.sh:ro
+    entrypoint: /bin/sh
+    command: ["/init-vndb.sh"]
+    tty: true
+    stdin_open: true
