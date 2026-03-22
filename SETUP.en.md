@@ -47,8 +47,9 @@ On the first start, `init-vndb.sh` will automatically perform the following step
 5. Initialize the `var/` directory and configuration files
 6. Initialize the PostgreSQL database
 7. Import the data dump (decompress tar.zst → create schema → import tables)
-8. Rebuild caches (VN cache, vote statistics, tags, traits, search index)
-9. Start the development server
+8. Generate change records (required for web detail pages to work)
+9. Rebuild caches (VN cache, vote statistics, tags, traits, search index)
+10. Start the development server
 
 You can monitor initialization progress with:
 
@@ -168,7 +169,7 @@ curl -X POST http://localhost:3000/api/kana/tag \
 | ulist_labels | User list labels were not imported (the dump does not include the `private` column). |
 | vn_length_votes | Game length votes were not imported. |
 | Discussions / Edit history | The dump itself does not contain this data. |
-| Web frontend | The homepage returns a 500 error due to a cookie domain issue. The API documentation page (`GET /api/kana`) requires `make prod` (which depends on pandoc) to work. The API endpoints themselves are unaffected. |
+| API docs page | `GET /api/kana` requires `make prod` (which depends on pandoc) to work. The API endpoints themselves are unaffected. |
 
 ## Cache Rebuilding
 

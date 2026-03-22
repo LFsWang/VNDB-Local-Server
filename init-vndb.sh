@@ -135,6 +135,25 @@ if [ "$1" = "_devuser_init" ]; then
             UPDATE stats_cache SET count = COALESCE((SELECT count(*) FROM traits WHERE NOT hidden), 0) WHERE section = 'traits';
         " 2>/dev/null || true
 
+        # Generate change records for all entries (required for detail pages)
+        echo "  Generating change records..."
+        psql postgres -c "ALTER ROLE vndb SUPERUSER;"
+        psql -U vndb vndb -c "
+            SET session_replication_role = 'replica';
+            INSERT INTO changes (itemid, rev, ihid, ilock, requester, comments)
+            SELECT id, 1, hidden, locked, 'u1', 'Imported from dump' FROM vn ON CONFLICT (itemid, rev) DO NOTHING;
+            INSERT INTO changes (itemid, rev, ihid, ilock, requester, comments)
+            SELECT id, 1, hidden, locked, 'u1', 'Imported from dump' FROM releases ON CONFLICT (itemid, rev) DO NOTHING;
+            INSERT INTO changes (itemid, rev, ihid, ilock, requester, comments)
+            SELECT id, 1, hidden, locked, 'u1', 'Imported from dump' FROM chars ON CONFLICT (itemid, rev) DO NOTHING;
+            INSERT INTO changes (itemid, rev, ihid, ilock, requester, comments)
+            SELECT id, 1, hidden, locked, 'u1', 'Imported from dump' FROM producers ON CONFLICT (itemid, rev) DO NOTHING;
+            INSERT INTO changes (itemid, rev, ihid, ilock, requester, comments)
+            SELECT id, 1, hidden, locked, 'u1', 'Imported from dump' FROM staff ON CONFLICT (itemid, rev) DO NOTHING;
+            SET session_replication_role = 'origin';
+        " 2>/dev/null || true
+        psql postgres -c "ALTER ROLE vndb NOSUPERUSER;"
+
         # Rebuild caches (vncache, vote stats, tags, traits, search)
         echo "  Rebuilding VN cache (released, languages, platforms, developers)..."
         psql -U vndb vndb -c "SELECT update_vncache(NULL);" 2>/dev/null || true

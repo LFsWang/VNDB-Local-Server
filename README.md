@@ -1,6 +1,6 @@
 # Local VNDB Server
 
-- [ ] web - :x: detail page not working (cookie domain issue)
+- [x] web - detail pages working (vn, character, release, producer, staff)
 - [x] api - fully functional (query by id, search by title, filters, all endpoints)
 
 check the [SETUP.md](SETUP.en.md) / [中文版本](SETUP.md) to build the docker container

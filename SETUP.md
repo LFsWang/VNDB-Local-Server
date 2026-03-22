@@ -47,8 +47,9 @@ docker compose up -d
 5. 初始化 `var/` 目錄與設定檔
 6. 初始化 PostgreSQL 資料庫
 7. 匯入資料 dump（解壓 tar.zst → 建立 schema → 匯入各資料表）
-8. 重建快取（VN 快取、投票統計、標籤、特徵、搜尋索引）
-9. 啟動開發伺服器
+8. 生成變更紀錄（使網頁詳細頁面可正常運作）
+9. 重建快取（VN 快取、投票統計、標籤、特徵、搜尋索引）
+10. 啟動開發伺服器
 
 可透過以下指令觀察初始化進度：
 
@@ -168,7 +169,7 @@ curl -X POST http://localhost:3000/api/kana/tag \
 | ulist_labels | 使用者清單標籤未匯入（dump 不含 private 欄位）。 |
 | vn_length_votes | 遊戲時長投票未匯入。 |
 | 討論區 / 編輯紀錄 | Dump 本身不包含這些資料。 |
-| 網頁前端 | 首頁因 cookie domain 問題回傳 500，API 文件頁（`GET /api/kana`）需 `make prod`（依賴 pandoc）才能使用。API 端點本身不受影響。 |
+| API 文件頁 | `GET /api/kana` 需 `make prod`（依賴 pandoc）才能使用。API 端點本身不受影響。 |
 
 ## 快取重建
 
