@@ -1,7 +1,7 @@
 # Local VNDB Server
 
-- [ ] web - :x: not working
-- [v] api - work with vndbid (search by title no work)
+- [ ] web - :x: detail page not working
+- [x] api - work with request by id (search by title still not work)
 
 check the [SETUP.md](SETUP.en.md) / [中文版本](SETUP.md) to build the docker container
 
