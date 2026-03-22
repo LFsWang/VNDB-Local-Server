@@ -1,7 +1,7 @@
 # Local VNDB Server
 
-- [ ] web - :x: detail page not working
-- [x] api - work with request by id (search by title still not work)
+- [ ] web - :x: detail page not working (cookie domain issue)
+- [x] api - fully functional (query by id, search by title, filters, all endpoints)
 
 check the [SETUP.md](SETUP.en.md) / [中文版本](SETUP.md) to build the docker container
 
@@ -40,7 +40,7 @@ Tag names and their aliases are globally unique and self-describing. See the tag
 
 - File: vndb-traits-latest.json.gz (more files).
 
-- ~~Updated: Every day around 8:00 UTC.~~
+- Updated: Every day around 8:00 UTC.
 
 - License: Open Database License + Database Contents License, see our Data License for more information.
 
