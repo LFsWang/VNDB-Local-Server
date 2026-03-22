@@ -22,6 +22,24 @@ VNDBDocker/
 └── SETUP.md                       # This document (Chinese version)
 ```
 
+## Preparing the VNDB Source Code
+
+The `vndb/` directory must be prepared separately (it is not included in this repo). After obtaining the source code, the following file must be modified:
+
+### Modify `vndb/conf_example.pl`
+
+Remove the `domain` key from `cookie_defaults`. Without this change, all web pages will return a 500 error on localhost (the FU framework's domain validation rejects hostnames without a `.`):
+
+```perl
+# Before
+cookie_defaults => { domain => 'localhost', path => '/' },
+
+# After
+cookie_defaults => { path => '/' },
+```
+
+> If the container has already been initialized, you must also apply the same change to `vndb/docker/var/conf.pl`, or delete `vndb/docker/pg17` and re-initialize.
+
 ## Quick Start
 
 ### 1. Build the Docker Image

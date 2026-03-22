@@ -22,6 +22,24 @@ VNDBDocker/
 └── SETUP.md                       # 本文件
 ```
 
+## 準備 VNDB 原始碼
+
+`vndb/` 目錄需自行準備（不包含在本 repo 中）。取得原始碼後，需修改以下檔案：
+
+### 修改 `vndb/conf_example.pl`
+
+將 `cookie_defaults` 中的 `domain` 移除，否則在 localhost 環境下所有網頁會回傳 500 錯誤（FU 框架的 domain 驗證不接受沒有 `.` 的主機名）：
+
+```perl
+# 修改前
+cookie_defaults => { domain => 'localhost', path => '/' },
+
+# 修改後
+cookie_defaults => { path => '/' },
+```
+
+> 如果容器已經初始化過，也需要同步修改 `vndb/docker/var/conf.pl` 中的相同設定，或刪除 `vndb/docker/pg17` 重新初始化。
+
 ## 快速開始
 
 ### 1. 建置 Docker 映像
